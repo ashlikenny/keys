@@ -7,7 +7,6 @@ import random         # генерация случайных чисел
 import string         # дополнительные функции для работы со строками
 import wikipedia      # для работы с wikipedia
 import requests       # для отправки запросов на сторонние сервисы
-import numexpr        # для вычисления выражений в строке
 import json           # для работы с json строками
 import re             # для использования регулярных выражений
 from aiogram.filters.command import Command
@@ -86,8 +85,6 @@ async def joke(message: types.Message, count = 2):
 async def calc(message: types.Message, regular = ""):
     if (not regular):
         await message.answer('Введите математическое выражение, например: 2+2*2, или (2+2)*2, или другое...')
-    else:
-        await message.answer(regular + ' = ' +numexpr.evaluate(regular))
 
 # получаем статью из википедии
 async def wiki(message: types.Message, word = ""):
