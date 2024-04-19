@@ -100,7 +100,7 @@ async def wiki(message: types.Message, word = ""):
         s = random.choice(e.options)
         page = wikipedia.page(s)
     summary = page.summary
-    await message.answer(word + ' статья wiki:\n' + summary:4000)
+    await message.answer(word + ' статья wiki:\n' + summary[:4000])
 
 # выводим в отдельную функцию случайное приветствие пользователя
 async def greetings(message: types.Message):
