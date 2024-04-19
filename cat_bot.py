@@ -109,7 +109,7 @@ async def greetings(message: types.Message):
 
 # отправляем с помощью сервиса cataas, фото котика
 async def cat(message: types.Message):
-    await bot.send_photo(message.chat.id, photo=f"https://cataas.com/cat?rand={random_string(16)}")
+    await bot.send_photo(message.chat.id, photo="https://cataas.com/cat?rand=" + random_string(16))
 
 # отправить анимированного котика
 async def catgif(message: types.Message):
