@@ -113,7 +113,7 @@ async def cat(message: types.Message):
 
 # отправить анимированного котика
 async def catgif(message: types.Message):
-    await bot.send_animation(message.chat.id, animation=f"https://cataas.com/cat/gif?rand={random_string(16)}")
+    await bot.send_animation(message.chat.id, animation="https://cataas.com/cat/gif?rand=" + random_string(16))
 
 # генерация строки из случайных символов заданной длины
 def random_string(length):
