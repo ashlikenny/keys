@@ -48,7 +48,7 @@ main_kb = InlineKeyboardMarkup(inline_keyboard = [
 # это событие будет вызываться при нажатии кнопок
 @dp.callback_query()
 async def handle_callback_query(callback_query: types.CallbackQuery):
-    logging.info(f'Pressed from: {callback_query.message.chat.first_name}, button: {callback_query.data}')
+    logging.info('Pressed from: ' + callback_query.message.chat.first_name + ', button: ' + callback_query.data)
     # в data у нас содержится текст callback_data
     data = callback_query.data
     if data == 'greetings':
@@ -70,7 +70,7 @@ async def joke(message: types.Message, count = 2):
     if response.status_code:
         try:
             data = json.loads(response.text, strict = False)
-            await message.answer(f'Анекдот:\n{ data.get("content") }')
+            await message.answer('Анекдот:\n' + data.get("content"))
         except Exception:
             if count > 0:
                 return await joke(message, --count)
@@ -87,7 +87,7 @@ async def calc(message: types.Message, regular = ""):
     if (not regular):
         await message.answer('Введите математическое выражение, например: 2+2*2, или (2+2)*2, или другое...')
     else:
-        await message.answer(f'{regular} = {numexpr.evaluate(regular)}')
+        await message.answer(regular + ' = ' +numexpr.evaluate(regular))
 
 # получаем статью из википедии
 async def wiki(message: types.Message, word = ""):
@@ -100,12 +100,12 @@ async def wiki(message: types.Message, word = ""):
         s = random.choice(e.options)
         page = wikipedia.page(s)
     summary = page.summary
-    await message.answer(f'{word} статья wiki:\n{summary:4000}')
+    await message.answer(word + ' статья wiki:\n' + summary:4000)
 
 # выводим в отдельную функцию случайное приветствие пользователя
 async def greetings(message: types.Message):
     hello_type = random.choice("Привет,Hi,Здравствуйте,Хай,Здарова".split(","))
-    await message.answer(f'{hello_type}, {message.chat.first_name}!')
+    await message.answer(hello_type + ', ' + message.chat.first_name + ' !')
 
 # отправляем с помощью сервиса cataas, фото котика
 async def cat(message: types.Message):
@@ -122,13 +122,13 @@ def random_string(length):
 # Добавляем обработчик команды /start, который будет показывать наши главные кнопки
 @dp.message(Command('start'))
 async def cmd_start(message: types.Message):
-    logging.info(f'Start command from: {message.chat.first_name}')
+    logging.info('Start command from: ' + message.chat.first_name)
     await bot.send_message(chat_id = message.chat.id, text = "Выберите действие: ", reply_markup = main_kb)
 
 # здесь мы будем перехватать прочие сообщения от пользователя
 @dp.message()
 async def filter(message):
-    logging.info(f'Received from: {message.chat.first_name}, message: {message.text}')
+    logging.info('Received from: ' + message.chat.first_name + ', message: ' + message.text)
     if (any(message.text.lower().find(t) == 0 for t in "привет,hi,hello,здрасьте".split(","))):
         await greetings(message)
     elif (any(message.text.lower().find(t) == 0 for t in "котик,кот,кошка".split(","))):
